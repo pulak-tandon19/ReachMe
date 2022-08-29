@@ -1,4 +1,5 @@
-{% load custom_tags %}
+{% comment %}
+<!-- {% load custom_tags %}
 
 <div class="container" id="body1">
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -10,34 +11,12 @@
       href="{% url 'index' %}"
       {% endif %}
       ><i class="fas fa-comment"></i> Social Network</a>
-      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li>
             <a href="{% url 'explore' %}" class="inbox-icon"><i class="far fa-compass"></i></a>
           </li>
-          <!-- {% comment %} <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li> {% endcomment %} -->
+
         </ul>
         <form class="d-flex" method="GET" action="{% url 'user-search' %}">
             <div class="input-group">
@@ -51,7 +30,7 @@
         
 
         <div class="nav-item inbox-icon-container">
-          <a href="{% url 'inbox' %}" class="inbox-icon"><i class="far fa-paper-plane"></i></a>
+         
         </div>
         
         <div class="nav-item">
@@ -68,4 +47,32 @@
       </div>
     </div>
   </nav>
-</div>
+</div> -->
+{% endcomment %}
+
+<nav>
+  <div class="container">
+    <a class="navbar-brand" 
+      {% if user.is_authenticated %}
+      href="{% url 'post-list' %}"
+      {% else %}
+      href="{% url 'index' %}"
+      {% endif %}>
+      <h2 class="log">
+          Social  Media
+        </h2>
+    </a>
+      <div class="search-bar">
+          <i class="uil uil-search"></i>
+          <input type="search" placeholder="Search for users">
+          
+      </div>
+      <div class="create">
+          <label class= "btn btn-primary" for="create-post">Create</label>
+              <div class="profile-photo">
+                  <img src="{{ user.profile.picture.url }}" alt="">
+              </div>
+          
+      </div>
+  </div>
+</nav>

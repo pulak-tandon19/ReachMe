@@ -1,8 +1,27 @@
-{% extends 'landing/base.html' %}
 
-{% block content %}
 
-<div class="container">
+<div class="messages">
+{% for thread in threads.all %}
+
+    <div class="message">
+        <a href="{% url 'thread' thread.pk %}">
+        <div class="profile-photo">
+            <img src="{{ thread.receiver.profile.image }}" alt="">
+        </div>
+        <div class="message-body">
+            
+
+            <h5> @{{ thread.receiver }}</h5>
+</a>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% comment %}
+
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-12 p-5">
             <h3>Your Conversations!!</h3>
@@ -28,6 +47,6 @@
     </div>
     {% endfor %}
 
-</div>
+</div> -->
 
-{% endblock content %}
+{% endcomment %}

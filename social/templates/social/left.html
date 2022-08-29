@@ -1,0 +1,60 @@
+<div class="left">
+    <a href="" class="profile">
+        <div class="profile-photo">
+            <img src="{{ request.user.profile.picture.url }}" alt="">
+        </div>
+        <div class="handle">
+            <h4>{{ request.user.username }}</h4>
+            {% if request.user.profile.name %}
+            <p class="text-muted">
+                {{ request.user.profile.name }}
+            </p>
+            {% endif %}
+        </div>
+    </a>
+<!-- ...........sidebar............ -->
+
+    <div class="sidebar">
+        <a href="{% url 'post-list' %}" class="menu-item active">
+            <span><i class="uil uil-home"></i></span><h3 class= "heading">Home</h3>
+            
+        </a>
+        <a href="{% url 'explore' %}" class="menu-item">
+            <span><i class="uil uil-compass"></i></span><h3 class= "heading">Explore</h3>
+            
+        </a>
+        <a href="" class="menu-item" id="notifications">
+            <span><i class="uil uil-bell"><small class="notification-count">9</small></i></span><h3 class= "heading">Notifications</h3>
+             <!-- ...........notification popup............ -->
+             <div class="notifications-popup">
+                <div>
+                    <div class="profile-photo">
+                        <img src="./WhatsApp Image 2022-04-10 at 10.17.00 PM.jpeg" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Keke benjamin</b> accepted your friend request
+                        <small class="text-muted">2 Days Ago</small>
+                    </div>
+                </div>
+                <div>
+                    <div class="profile-photo">
+                        <img src="./WhatsApp Image 2022-04-10 at 10.17.00 PM.jpeg" alt="">
+                    </div>
+                    <div class="notification-body">
+                        <b>Keke benjamin</b> accepted your friend request
+                        <small class="text-muted">2 Days Ago</small>
+                    </div>
+                </div>
+             </div> 
+        </a>
+        <a href="" class="menu-item">
+        
+            <span><i class="uil uil-envelope-alt"><small class="notification-count">9</small></i></span><h3 class= "heading">Messages</h3>
+            
+        </a>
+        <a href="" class="menu-item">
+            <span><i class="uil uil-palette"></i></span><h3 class= "heading">Theme</h3>
+        </a>
+    </div>
+        <!-- ...........end of sidebar............ -->
+    <label for="create-post" class ="btn btn-primary">Create Post</label>

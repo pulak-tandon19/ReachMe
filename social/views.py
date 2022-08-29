@@ -10,6 +10,8 @@ from django.views import View
 from .models import Post, Comment, UserProfile, Notification, ThreadModel, MessageModel, Image, Tag
 from .forms import PostForm, CommentForm, CommentReplyForm, ThreadForm, MessageForm, ShareForm, ExploreForm
 from django.views.generic.edit import UpdateView, DeleteView 
+# from rest_framework.views import APIView
+
 
 # Create your views here.
 
@@ -34,27 +36,30 @@ class PostListView(LoginRequiredMixin, View):
         posts=Post.objects.filter(
             author__profile__followers__in=[logged_in_user.id]
         )
-        form=PostForm(request.POST, request.FILES)
+        # form=PostForm(request.POST, request.FILES)
         share_form= ShareForm()
-        files= request.FILES.getlist('image')
+        # files= request.FILES.getlist('image')
+        body = self.request.POST.get('create-post')
+        new_post = Post.objects.create(body= body, author= request.user)
+        new_post.create_tags()
 
-        if form.is_valid:
-            new_post = form.save(commit=False)
-            new_post.author=request.user
-            new_post.save()
+        # if form.is_valid:
+        #     new_post = form.save(commit=False)
+        #     new_post.author=request.user
+        #     new_post.save()
 
-            new_post.create_tags()
+        #     new_post.create_tags()
 
-            for f in files:
-                img=Image(image=f)
-                img.save()
-                new_post.image.add(img)
+        #     for f in files:
+        #         img=Image(image=f)
+        #         img.save()
+        #         new_post.image.add(img)
 
-            new_post.save()
+        #     new_post.save()
         
         context={
             'post_list': posts,
-            'form':form,
+            # 'form':form,
             'shareform': share_form,
         }
 
@@ -79,16 +84,18 @@ class PostDetailView(LoginRequiredMixin, View):
 
     def post(self, request, pk, *args, **kwargs):
         post=Post.objects.get(pk=pk)
-        form= CommentForm(request.POST)
+        # form= CommentForm(request.POST)
+        comment= request.POST.get('post-comment')
 
-        if form.is_valid():
-            new_comment= form.save(commit=False)
-            new_comment.author=request.user
-            new_comment.post=post
-            new_comment.comment_level=1
-            new_comment.save()
+        # if form.is_valid():
+        #     new_comment= form.save(commit=False)
+        #     new_comment.author=request.user
+        #     new_comment.post=post
+        #     new_comment.comment_level=1
+        #     new_comment.save()
 
-            new_comment.create_tags()
+        #     new_comment.create_tags()
+        new_comment = Comment.objects.create(comment=comment, author= request.user, post= post, comment_level=1)
 
         comments= Comment.objects.filter(post=post).order_by('-created_on')
         notification= Notification.objects.create(notification_type=2, from_user=request.user, to_user=post.author, post=post)
@@ -96,7 +103,7 @@ class PostDetailView(LoginRequiredMixin, View):
 
         context={
             'post':post,
-            'form':form,
+            # 'form':form,
             'comments':comments,
         }
 
@@ -514,7 +521,7 @@ class ThreadView(View):
             'message_list': message_list,
         }
 
-        return render(request, 'social/thread.html', context)
+        return render(request, 'social/thread1.html', context)
 
 class CreateMessage(View):
     def post(self, request, pk, *args, **kwargs):
@@ -547,7 +554,7 @@ class CreateMessage(View):
 
 class Explore(View):
     def get(self, request, *args, **kwargs):
-        explore_form= ExploreForm()
+        # explore_form= ExploreForm()
         query= self.request.GET.get('query')
         tag= Tag.objects.filter(name= query).first()
 
@@ -555,39 +562,41 @@ class Explore(View):
             posts= Post.objects.filter(tags__in=[tag])
         else:
             posts= Post.objects.all()
+            # posts = None
 
         context={
             'tag': tag,
             'posts': posts,
-            'explore_form': explore_form,
+            # 'explore_form': explore_form,
         }
 
         return render(request, 'social/explore.html', context)
 
 
     def post(self, request, *args, **kwargs):
-        explore_form = ExploreForm(request.POST)
-        if explore_form.is_valid():
-            query= explore_form.cleaned_data['query']
-            tag = Tag.objects.filter(name= query).first()
+        # explore_form = ExploreForm(request.POST)
+        # if explore_form.is_valid():
+        query= self.request.POST.get('query')
+        tag = Tag.objects.filter(name= query).first()
 
-            posts= None
+        posts= None
 
-            if tag:
-                posts= Post.objects.filter(tags__in=[tag])
+        if tag:
+            posts= Post.objects.filter(tags__in=[tag])
 
-            if posts:
-                context={
+        if posts:
+            context={
                     'tag': tag,
                     'posts': posts,
                 }
-            else:
-                context={
+        else:
+            context={
                     'tag': tag,
                 }
-
-            return HttpResponseRedirect(f'/social/explore?query={query}')
-        return HttpResponseRedirect('/social/explore')
+        
+        # return render(request, 'social/explore.html', context)
+        return HttpResponseRedirect(f'/social/explore?query={query}')
+        # return HttpResponseRedirect('/social/explore')
 
 
 

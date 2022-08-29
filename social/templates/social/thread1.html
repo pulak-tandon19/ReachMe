@@ -1,0 +1,31 @@
+{% extends 'landing/base.html' %}
+{% block content %}
+   
+   
+   <div class="chat-window">
+        <div class="chats">
+        {% for message in message_list %}
+        {% if message.sender_user == request.user %}
+            <div class="message1 incoming">
+                <p>{{ message.body }}</p>
+            </div>
+        {% elif message.receiver_user == request.user %}
+            <div class="message1 outgoing">
+                <p>{{ message.body }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+        </div>
+    </div>
+
+    <form action="" class="create-post" method="POST">
+        {% csrf_token %}
+        <div class="profile-photo">
+          <img src="{{ request.user.profile.picture.url }}" alt="" />
+        </div>
+        <input type="text" name = "create-post" placeholder="What's on your mind?" id="create-post" />
+      
+        <button type="submit" class="btn btn-primary button">Post</button>
+    </form>
+
+{% endblock %}

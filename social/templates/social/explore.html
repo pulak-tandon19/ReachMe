@@ -3,7 +3,72 @@
 
 {% block content %}
 
-<div class="container">
+<form action="{% url 'explore' %}" class="create-tag" method="POST">
+    {% csrf_token %}
+    <div class="profile-photo">
+      <img src="{{ request.user.profile.picture.url }}" alt="" />
+    </div>
+    <input type="text" name="query" placeholder="Search for tags!" id="create-post" />
+  
+    <button type="submit" class="btn btn-primary button">Search</button>
+  </form>
+
+
+<div class="feeds">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="feed">
+      <div class="head">
+        <div class="user">
+          <div class="profile-photo">
+            <a href="{% url 'profile' post.author.profile.pk %}">
+              <img src="{{ post.author.profile.picture.url }}" alt="" />
+            </a>
+          </div>
+          <div class="ingo">
+            <h3>{{ post.author.username }}</h3>
+            <small class="text-muted">{{ post.created_on }}</small>
+          </div>
+        </div>
+      </div>
+      {% if post.image.count > 0 %} {% for img in post.image.all %}
+      <div class="photo">
+        <img src="{{ img.image.url }}" alt="" />
+      </div>
+      {% endfor %} {% endif %}
+      <div class="caption">
+        <p>{{ post.body }}</p>
+      </div>
+      <div class="action-buttons">
+        <div class="interaction-buttons">
+          <form method="POST" action="{% url 'like' post.pk %}">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.path }}">
+              <button type="submit">
+          <i class="uil uil-thumbs-up">{{ post.likes.all.count }}</i>
+             </button>
+      </form>
+      <form method="POST" action="{% url 'dislike' post.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <button type="submit">
+          <i class="uil uil-thumbs-down">{{ post.dislikes.all.count }}</i>
+      </button>
+  </form>
+       <a href="{% url 'post-detail' post.pk %}">
+          <span><i class="uil uil-comment-dots"></i></span>
+          </a>
+          <span><i class="uil uil-share-alt"></i></span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {%endif %}
+  </div>
+
+{% endblock content %}
+
+<!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-5 col-sm-6">
             <a href="{% url 'post-list' %}" class="btn btn-light">
@@ -109,6 +174,4 @@
     </div>
     {% endfor %}
 
-</div>
-
-{% endblock content %}
+</div> -->
