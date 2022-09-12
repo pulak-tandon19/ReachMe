@@ -1,8 +1,31 @@
-{% extends 'landing/base.html' %}
-
-
-{% block content %}
-<div class="container">
+{% extends 'landing/base.html' %} {% block content %}
+<div class="feeds">
+  <div class="feed">
+    <a href="{% url 'profile' profile.pk %}">
+      <h3>Followers for {{ profile.user.username }}</h3>
+    </a>
+  </div>
+</div>
+<div class="feeds">
+  {% for follower in followers %}
+  <a href="{% url 'profile' follower.profile.pk %}">
+    <div class="feed">
+      <div class="head">
+        <div class="user">
+          <div class="profile-photo">
+            <img src="{{ follower.profile.picture.url }}" alt="" />
+          </div>
+          <div class="ingo">
+            <h3>{{ follower.username }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock content %} {% comment %}
+<!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-3 col-sm-6">
            <a href="{% url 'profile' profile.pk %}" class="btn btn-light">Back To Profile</a>
@@ -29,5 +52,5 @@
 </div>
 {% endfor %}
 
-</div>
-{% endblock content %}
+</div> -->
+{% endcomment %}

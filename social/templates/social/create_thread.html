@@ -1,10 +1,23 @@
-{% extends 'landing/base.html' %}
-
-{% load crispy_forms_tags %}
-
+{% extends 'landing/base.html' %} {% load crispy_forms_tags %} 
 {% block content %}
 
-<div class="container">
+  <form action="" class="create-post" method="POST">
+    {% csrf_token %}
+    <div class="profile-photo">
+      <img src="{{ request.user.profile.picture.url }}" alt="" />
+    </div>
+    <input
+      type="text"
+      name="username"
+      placeholder="Enter the username you would like to talk to..."
+    />
+  
+    <button type="submit" class="btn btn-primary button">Post</button>
+  </form>
+
+
+    {% endblock content %} {% comment %}
+    <!-- <div class="container">
     <div class="row">
         <div class="col-md-12 p-5">
             <a href="{% url 'inbox' %}" class="btn btn-light">Back to your inbox</a>
@@ -39,6 +52,7 @@
         </div>
     </div>
 
+</div> -->
+    {% endcomment %}
+  </div>
 </div>
-
-{% endblock content %}

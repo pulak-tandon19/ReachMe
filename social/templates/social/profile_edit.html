@@ -1,8 +1,34 @@
-{% extends 'landing/base.html' %}
-{% load crispy_forms_tags %}
-
+{% extends 'landing/base.html' %} {% load crispy_forms_tags %} 
 {% block content %}
-<div class="container">
+<div class="feeds">
+  <div class="feed">
+    <div class="head">
+      <div class="user">
+        <div class="ingo">
+          <h3>Edit Your Profile!!</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="feeds">
+    <div class="feed">
+        <div class="caption">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form | crispy}}
+                
+                    <buttons>
+                        Submit
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %} {% comment %}
+<!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-5 col-sm-6">
             <a href="{% url 'profile' object.pk %}" class="btn btn-light">Back To Profile</a>
@@ -28,5 +54,5 @@
     </div>
    
     
-</div>
-{% endblock content %}
+</div> -->
+{% endcomment %}

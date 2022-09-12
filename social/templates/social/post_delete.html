@@ -1,8 +1,28 @@
-{% extends 'landing/base.html' %}
-
-
-{% block content %}
-<div class="container">
+{% extends 'landing/base.html' %} {% block content %}
+<div class="feeds">
+  <div class="feed">
+    <div class="head">
+      <div class="user">
+        <div class="ingo">
+          <h3>Delete Post?</h3>
+          <p>Once deleted, the action cannot be undone!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="feeds">
+    <div class="feed">
+      <div class="caption">
+        <form method="POST">
+          {% csrf_token %}
+          <button>Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock content %} {% comment %}
+  <!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-5 col-sm-6">
             <a href="{% url 'post-detail' object.pk %}" class="btn btn-light">Back To Post</a>
@@ -25,5 +45,6 @@
     </div>
    
     
+</div> -->
+  {% endcomment %}
 </div>
-{% endblock content %}

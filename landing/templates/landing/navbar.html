@@ -62,11 +62,13 @@
           Social  Media
         </h2>
     </a>
+    <form action="{% url 'user-search' %}" method="GET">
       <div class="search-bar">
           <i class="uil uil-search"></i>
-          <input type="search" placeholder="Search for users">
+          <input type="search" name="query" placeholder="Search for users">
           
       </div>
+    </form>
       <div class="create">
           <label class= "btn btn-primary" for="create-post">Create</label>
               <div class="profile-photo">

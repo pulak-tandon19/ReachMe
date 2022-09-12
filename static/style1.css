@@ -80,6 +80,11 @@ img{
     color: white;
 }
 
+.btn-danger{
+    background: var(--color-danger);
+    color: white;
+}
+
 .text-bold{
     font-weight: 500;
 }
@@ -578,17 +583,23 @@ main .container .right{
  
 
 .message1{
-    background: var(--color-primary);
+    /* background: var(--color-primary); */
     padding: 5px 15px;
-    max-width: 100px;
+    width: max-content;
+    max-width: 300px;
     margin-bottom: 15px;
     border-radius: 10px 50px 50px 10px;
 }
 
 .outgoing{
+    background: var(--color-primary);
     margin-left: auto;
     border-radius: 50px 10px 10px 50px;
     text-align: right;
+} 
+
+.incoming{
+    background: var(--color-danger);
 }
 
 /* ====================================

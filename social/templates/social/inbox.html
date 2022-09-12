@@ -6,12 +6,18 @@
     <div class="message">
         <a href="{% url 'thread' thread.pk %}">
         <div class="profile-photo">
-            <img src="{{ thread.receiver.profile.image }}" alt="">
+            <img src="{{ thread.receiver.profile.picture.url }}" alt="">
         </div>
         <div class="message-body">
             
 
-            <h5> @{{ thread.receiver }}</h5>
+            <h5>    
+                {% if thread.receiver != request.user %}
+                {{ thread.receiver }}
+                {% else %}
+                {{ thread.user }}
+                {% endif %}
+            </h5>
 </a>
 
         </div>

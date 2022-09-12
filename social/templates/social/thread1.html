@@ -6,11 +6,11 @@
         <div class="chats">
         {% for message in message_list %}
         {% if message.sender_user == request.user %}
-            <div class="message1 incoming">
+            <div class="message1 outgoing">
                 <p>{{ message.body }}</p>
             </div>
         {% elif message.receiver_user == request.user %}
-            <div class="message1 outgoing">
+            <div class="message1 incoming">
                 <p>{{ message.body }}</p>
             </div>
         {% endif %}
@@ -18,14 +18,14 @@
         </div>
     </div>
 
-    <form action="" class="create-post" method="POST">
+    <form action="{% url 'create-message' thread.pk %}" class="create-post" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="profile-photo">
           <img src="{{ request.user.profile.picture.url }}" alt="" />
         </div>
-        <input type="text" name = "create-post" placeholder="What's on your mind?" id="create-post" />
+        <input type="text" name = "create-message" placeholder="Type your message" id="create-post" />
       
-        <button type="submit" class="btn btn-primary button">Post</button>
+        <button type="submit" class="btn btn-primary button">Send</button>
     </form>
 
 {% endblock %}

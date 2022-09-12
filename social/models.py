@@ -119,8 +119,8 @@ class ThreadModel(models.Model):
 
 class MessageModel(models.Model):
     thread= models.ForeignKey('ThreadModel', on_delete=models.CASCADE, related_name='+', blank=True, null=True)
-    sender_user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    receiver_user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    sender_user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='+',null=True)
+    receiver_user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', null=True)
     body=models.CharField(max_length=1000)
     image=models.ImageField(upload_to='uploads/message_photos', blank=True, null= True)
     date=models.DateTimeField(default=timezone.now)

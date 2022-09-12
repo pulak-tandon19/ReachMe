@@ -1,8 +1,38 @@
 {% extends 'landing/base.html' %}
 
 {% block content %}
+  <div class="feeds">
+    {% for profile in profile_list %}
+    <a href="{% url 'profile' profile.pk %}">
+      <div class="feed">
+        <div class="head">
+          <div class="user">
+            <div class="profile-photo">
+              <img src="{{ profile.picture.url }}" alt="" />
+            </div>
+            <div class="ingo">
+              <h3>{{ profile.user.username }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="caption">
+            {% if profile.location %}
+            <p>Location: {{ profile.location }}</p>
+            {% endif %}
+            {% if profile.birth_date %}
+            <p>Birth Date: {{ profile.birth_date }}
+            {% endif %}
+            <p>Followers: {{ profile.followers.all.count }}</p>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 
-<div class="container">
+{% endblock content %}
+
+{% comment %}
+<!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-5 col-sm-6">
             <a href="{% url 'post-list' %}" class="btn btn-light">Back To Feed</a>
@@ -27,6 +57,6 @@
         </div>
     </div>
     {% endfor %}
-</div>
+</div> -->
 
-{% endblock content %}
+{% endcomment %}

@@ -1,8 +1,111 @@
-{% extends 'landing/base.html' %}
+{% extends 'landing/base.html' %} {% block content %}
+<div class="feeds">
+  <div class="feed">
+    <div class="head">
+      <div class="user">
+        <div class="profile-photo">
+            <img src="{{ profile.picture.url }}" alt="" />
+        </div>
+        <div class="ingo">
+          <h3>{{ profile.user.username }}  <span>
+            {% if request.user == user %}
+            <a href="{% url 'profile-edit' profile.pk %}"><i class="far fa-edit"></i></a>
+            {% endif %}
+        </span><h3>
+        </div>
+      </div>
+    </div>
+    <div class="caption">
+        {% if profile.name %}
+        <p>{{ profile.name }}</p>
+        {% endif %}
+        {% if profile.bio %}
+            <p>{{ profile.bio }}</p>
+            {% endif %}
+            <a href={% url 'list-followers' profile.pk %}>Followers: {{ number_of_followers }}</a>
+      </div>
+  </div>
+  <div class="feed">
+    <div class="caption">
+        {% if profile.location %}
+            <p>Location: {{ profile.location }}</p>
+            {% endif %}
+            {% if profile.birth_date %}
+            <p>Birth Date: {{ profile.birth_date }}
+            {% endif %}
+            {% if user == request.user %}
+            {% else %}
+            {% if is_following %}
+            <form action="{% url 'remove-follower' profile.pk %}" , method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger button" type="submit">Unfollow</button>
+            </form>
+            {% else %}
+            <form action="{% url 'add-follower' profile.pk %}" , method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary button">Follow</button>
+            </form>
+            {% endif %}
+            {% endif %}
 
+      </div>
+  </div>
+</div>
 
-{% block content %}
-<div class="container">
+<div class="feeds">
+    {% for post in posts %}
+    <div class="feed">
+      <div class="head">
+        <div class="user">
+          <div class="profile-photo">
+            <a href="{% url 'profile' post.author.profile.pk %}">
+              <img src="{{ post.author.profile.picture.url }}" alt="" />
+            </a>
+          </div>
+          <div class="ingo">
+            <h3>{{ post.author.username }}</h3>
+            <small class="text-muted">{{ post.created_on }}</small>
+          </div>
+        </div>
+      </div>
+      {% if post.image.count > 0 %} {% for img in post.image.all %}
+      <div class="photo">
+        <img src="{{ img.image.url }}" alt="" />
+      </div>
+      {% endfor %} {% endif %}
+      <div class="caption">
+        <p>{{ post.body }}</p>
+      </div>
+      <div class="action-buttons">
+        <div class="interaction-buttons">
+          <form method="POST" action="{% url 'like' post.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}" />
+            <button type="submit">
+              <i class="uil uil-thumbs-up">{{ post.likes.all.count }}</i>
+            </button>
+          </form>
+          <form method="POST" action="{% url 'dislike' post.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}" />
+            <button type="submit">
+              <i class="uil uil-thumbs-down">{{ post.dislikes.all.count }}</i>
+            </button>
+          </form>
+  
+          <a href="{% url 'post-detail' post.pk %}">
+            <span><i class="uil uil-comment-dots"></i></span>
+          </a>
+          <span><i class="uil uil-share-alt"></i></span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+{% endblock content %}
+ {% comment %}
+<!-- <div class="container">
     <div class="row mt-5">
         <div class="col-md-3 col-sm-6">
             <a href="{% url 'post-list' %}" class="btn btn-light">Back To Feed</a>
@@ -51,7 +154,9 @@
             {% endif %}
 
             {% if profile.birth_date %}
-            <p>Birth Date: {% if user == request.user %}
+            <p>Birth Date: {{ profile.birth_date }}</p>
+            {% endif %}
+            {% if user == request.user %}
                 {% else %}
                 {% if is_following %}
             <form action="{% url 'remove-follower' profile.pk %}" , method="POST">
@@ -64,7 +169,6 @@
                 <button class="btn btn-outline-success" type="submit">Follow</button>
             </form>
             {% endif %}
-            {% endif %}{{ profile.birth_date }}</p>
             {% endif %}
 
             {% if user == request.user %}
@@ -155,5 +259,5 @@
         </div>
     </div>
     {% endfor %}
-</div>
-{% endblock content %}
+</div> -->
+{% endcomment %}

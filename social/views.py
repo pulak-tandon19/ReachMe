@@ -71,7 +71,7 @@ class PostDetailView(LoginRequiredMixin, View):
         post=Post.objects.get(pk=pk)
         form= CommentForm()
         form1= CommentReplyForm()
-        comments= Comment.objects.filter(post=post)
+        comments= Comment.objects.filter(post=post, comment_level=1)
 
         context={
             'post':post,
@@ -97,7 +97,7 @@ class PostDetailView(LoginRequiredMixin, View):
         #     new_comment.create_tags()
         new_comment = Comment.objects.create(comment=comment, author= request.user, post= post, comment_level=1)
 
-        comments= Comment.objects.filter(post=post).order_by('-created_on')
+        comments= Comment.objects.filter(post=post, comment_level=1).order_by('-created_on')
         notification= Notification.objects.create(notification_type=2, from_user=request.user, to_user=post.author, post=post)
 
 
@@ -111,18 +111,28 @@ class PostDetailView(LoginRequiredMixin, View):
 
 
 
-class PostEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    fields = ['body']
-    template_name= 'social/post_edit.html'
+class PostEditView(LoginRequiredMixin,View):
+    def get(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        context = {
+            'post': post
+        }
+        return render(request, 'social/post_edit.html', context)
 
-    def get_success_url(self):
-        pk=self.kwargs['pk']
-        return reverse_lazy('post-detail', kwargs={'pk': pk})
-
-    def test_func(self):
-        post= self.get_object()
-        return self.request.user==post.author
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        comments = Comment.objects.filter(post = post)
+        if post.author == self.request.user:
+            body= self.request.POST.get('body')
+            post.body= body
+            post.save()
+            context= {
+                'post': post,
+                'commments' : comments,
+            }
+            return redirect('post-detail', pk= post.pk)
+        return HttpResponse("Not Allowed")
+    
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model= Post
@@ -133,18 +143,27 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post= self.get_object()
         return self.request.user==post.author
 
-class CommentEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Comment
-    fields = ['comment']
-    template_name= 'social/comment_edit.html'
+class CommentEditView(LoginRequiredMixin, View):
+    def get(self, request, post_pk,pk,cl=1,*args, **kwargs):
+        post = Post.objects.get(pk=post_pk)
+        comment = Comment.objects.get(post = post, pk=pk, comment_level=cl)
+        context = {
+            'post': post,
+            'comment': comment,
+        }
+        return render(request, 'social/comment_edit.html', context)
 
-    def get_success_url(self):
-        pk=self.kwargs['post_pk']
-        return reverse_lazy('post-detail', kwargs={'pk': pk})
-
-    def test_func(self):
-        comment= self.get_object()
-        return self.request.user==comment.author
+    def post(self, request, post_pk,pk,cl=1, *args, **kwargs):
+        post = Post.objects.get(pk=post_pk)
+        comment = Comment.objects.get(post = post, comment_level=cl, pk=pk)
+        if comment.author == self.request.user:
+            body= self.request.POST.get('body')
+            comment.comment= body
+            comment.save()
+            if cl==1:
+                return redirect('post-detail', pk= post.pk)
+            return redirect('comment-reply', post_pk=post_pk, pk=pk, comment_level=cl)
+        return HttpResponse("Not Allowed")
 
 class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
@@ -206,16 +225,16 @@ class CommentReplyView(LoginRequiredMixin, View):
     def post(self, request, post_pk, pk, comment_level, *args, **kwargs):
         post=Post.objects.get(pk=post_pk)
         parent_comment=Comment.objects.get(comment_level=comment_level, pk=pk)
-        form=CommentReplyForm(request.POST)
+        # form=CommentReplyForm(request.POST)
 
-        if form.is_valid():
-            new_comment= form.save(commit=False)
-            new_comment.author=request.user
-            new_comment.post=post
-            new_comment.parent=parent_comment
-            new_comment.comment_level=(comment_level+1)
-            new_comment.save()
-            parent_comment.replies.add(new_comment)
+        comment= self.request.POST.get('create-comment-reply')
+        new_comment = Comment.objects.create(comment = comment,
+        author=request.user,
+        post=post,
+        parent=parent_comment,
+        comment_level=(comment_level+1))
+    
+        parent_comment.replies.add(new_comment)
 
         notification= Notification.objects.create(notification_type=2, from_user=request.user, to_user=parent_comment.author, comment=new_comment)
  
@@ -490,7 +509,7 @@ class CreateThread(View):
         return render(request, 'social/create_thread.html', context)
 
     def post(self, request, *args, **kwargs):
-        form=ThreadForm(request.POST)
+        # form=ThreadForm(request.POST)
         username= request.POST.get('username')
 
         try:
@@ -502,9 +521,9 @@ class CreateThread(View):
                 thread= ThreadModel.objects.filter(user=receiver, receiver=request.user)[0]
                 return redirect('thread', pk=thread.pk)
 
-            if form.is_valid():
-                thread= ThreadModel(user=request.user, receiver=receiver)
-                thread.save()
+            # if form.is_valid():
+            thread= ThreadModel(user=request.user, receiver=receiver)
+            thread.save()
             return redirect('thread', thread.pk)
         except:
             messages.error(request, 'Invalid Username')
@@ -525,19 +544,19 @@ class ThreadView(View):
 
 class CreateMessage(View):
     def post(self, request, pk, *args, **kwargs):
-        form= MessageForm(request.POST, request.FILES)
+        # form= MessageForm(request.POST, request.FILES)
+        body = self.request.POST.get('create-message')
         thread= ThreadModel.objects.get(pk=pk)
         if thread.receiver == request.user:
             receiver=thread.user
         else:
             receiver=thread.receiver
 
-        if form.is_valid():
-            message=form.save(commit=False)
-            message.thread=thread
-            message.sender_user=request.user
-            message.receiver_user=receiver
-            message.save()
+        message = MessageModel.objects.create(body=body)
+        message.thread=thread
+        message.sender_user=request.user
+        message.receiver_user=receiver
+        message.save()
 
 
         

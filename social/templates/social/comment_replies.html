@@ -1,8 +1,118 @@
-{% extends 'landing/base.html' %}
-{% load crispy_forms_tags %}
-
+{% extends 'landing/base.html' %} {% load crispy_forms_tags %} 
 {% block content %}
-<div class="row justify-content-center mt-3 mb-5">
+
+<div class="feeds">
+  <div class="feed">
+    <div class="head">
+      <div class="user">
+        <div class="profile-photo">
+          <a href="{% url 'profile' parent_comment.author.profile.pk %}">
+            <img src="{{ parent_comment.author.profile.picture.url }}" alt="" />
+          </a>
+        </div>
+        <div class="ingo">
+            <h3>{{ parent_comment.author.username }}</h3>
+        <small class="text-muted">{{ parent_comment.created_on }}</small>
+
+          </div>
+      </div>
+    </div>
+    <div class="caption">
+        <p>{{ parent_comment.comment }}</p>
+
+      </div>
+  </div>
+</div>
+
+<form action="" class="create-post" method="POST">
+  {% csrf_token %}
+  <div class="profile-photo">
+    <img src="{{ request.user.profile.picture.url }}" alt="" />
+  </div>
+  <input
+    type="text"
+    name="create-comment-reply"
+    placeholder="Reply to the comment.."
+    id="create-post"
+  />
+
+  <button type="submit" class="btn btn-primary button">Post</button>
+</form>
+
+{% if replies.count != 0 %}
+<div class="feeds">
+<div class="feed">
+    <div class="head">
+      <div class="user">
+        
+        <div class="ingo">
+          <h3>Replies..</h3>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    
+<div class="feeds">
+  {% for comment in replies %}
+  <div class="feed">
+    <div class="head">
+      <div class="user">
+        <div class="profile-photo">
+          <a href="{% url 'profile' comment.author.profile.pk %}">
+            <img src="{{ comment.author.profile.picture.url }}" alt="" />
+          </a>
+        </div>
+        <div class="ingo">
+          <h3>{{ comment.author.username }}</h3>
+          <small class="text-muted">{{ comment.created_on }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="caption">
+      <p>{{ comment.comment }}</p>
+    </div>
+    <div class="action-buttons">
+      <div class="interaction-buttons">
+        <form
+          method="POST"
+          action="{% url 'comment-like' post.pk comment.pk %}"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}" />
+          <button type="submit">
+            <i class="uil uil-thumbs-up">{{ comment.likes.all.count }}</i>
+          </button>
+        </form>
+        <form
+          method="POST"
+          action="{% url 'comment-dislike' post.pk comment.pk %}"
+        >
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}" />
+          <button type="submit">
+            <i class="uil uil-thumbs-down">{{ comment.dislikes.all.count }}</i>
+          </button>
+        </form>
+
+        <a href="{% url 'comment-reply' post.pk comment.pk comment.comment_level %}">
+          <span><i class="uil uil-comment-dots"></i></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="feeds">
+  <div class="feed">
+    <div class="caption">
+        <p>No Replies...</p>
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock content %} {% comment %}
+<!-- <div class="row justify-content-center mt-3 mb-5">
     <div class="col-md-5 col-sm-12">
         <form method="POST">
             {% csrf_token %}
@@ -79,7 +189,5 @@
 
 <div class="container">
     <p class="text-center"> No replies </p>
-</div>
-{% endif %}
-
-{% endblock content %}
+</div> -->
+{% endcomment %}
