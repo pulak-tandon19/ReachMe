@@ -2,8 +2,8 @@
 <div class="feeds">
   <div class="feed">
     <div class="head">
-      <div class="user">
-        <div class="profile-photo">
+      <div class="user align ">
+        <div class="profile-photo size">
             <img src="{{ profile.picture.url }}" alt="" />
         </div>
         <div class="ingo">
@@ -66,6 +66,14 @@
             <h3>{{ post.author.username }}</h3>
             <small class="text-muted">{{ post.created_on }}</small>
           </div>
+          <span class="spacing">
+            <a href="">
+                <i class="far fa-edit"></i>
+            </a>
+            <a href="">
+            <i class="fas fa-trash"></i>
+        </a>
+          </span>
         </div>
       </div>
       {% if post.image.count > 0 %} {% for img in post.image.all %}
