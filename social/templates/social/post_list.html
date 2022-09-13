@@ -14,6 +14,10 @@ custom_tags %} {% block content %}
     id="create-post"
   />
 
+  <div class="attachment">
+      <input type="file" />
+  </div>
+
   <button type="submit" class="btn btn-primary button">Post</button>
 </form>
 
@@ -44,25 +48,29 @@ custom_tags %} {% block content %}
     </div>
     <div class="action-buttons">
       <div class="interaction-buttons">
-        <form method="POST" action="{% url 'like' post.pk %}">
+        <form class="like" method="POST" action="{% url 'like' post.pk %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
-          <button type="submit">
+          <button class="xyz" type="submit">
             <i class="uil uil-thumbs-up">{{ post.likes.all.count }}</i>
+
           </button>
         </form>
-        <form method="POST" action="{% url 'dislike' post.pk %}">
+        <form class="dislike" method="POST" action="{% url 'dislike' post.pk %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
-          <button type="submit">
+          <button class="xyz" type="submit">
             <i class="uil uil-thumbs-down">{{ post.dislikes.all.count }}</i>
           </button>
         </form>
 
-        <a href="{% url 'post-detail' post.pk %}">
-          <span><i class="uil uil-comment-dots"></i></span>
+        <a class="comm" href="{% url 'post-detail' post.pk %}">
+          <!-- <span><i class="uil uil-comment-dots"></i></span> -->
+          <div><i class="uil uil-comment-dots"></i></div>
+
         </a>
-        <span><i class="uil uil-share-alt"></i></span>
+        <!-- <span><i class="uil uil-share-alt"></i></span> -->
+
       </div>
     </div>
   </div>

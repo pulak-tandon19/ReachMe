@@ -15,9 +15,9 @@
         <div class="caption">
             <form action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <textarea name="body" id="" cols="30" rows="10">{{ post.body }}</textarea>
+                <textarea class="fullwidth" name="body" id="" cols="30" rows="10">{{ post.body }}</textarea>
                 <!-- {{form | crispy}} -->
-                <button type="Submit">Post</button>
+                <button class="buttons"type="Submit">Post</button>
             </form>
         </div>
     </div>

@@ -335,12 +335,52 @@ main .container .left .profile{
     font-size: 0.85rem;
     line-height: 1.5;
 }
+.spacing{
+    margin-left: 420px;
+}
+.spacing i{
+    margin: 5px;
+}
+/* .middle .feeds .spacing{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+} */
+.middle .feeds .feed .head .user .size{
+    width: 5vw;
+    height: 8vh;
+    /* border-radius: 50%; */
+}
 
 .middle .feed .user {
     display: flex;
     gap: 1rem;
 }
 
+.middle .feed .align{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.buttons{
+    width:100%;
+    border-radius: 50px;
+    background-color: var(--color-primary);
+    height: 50px;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    color:white;
+}
+.fullwidth{
+    width: 100%;
+    max-width: 100%;
+}
+textarea { 
+    font-size: 1rem;
+    line-height: 1.2;
+ }
 .middle .feed .photo{
     border-radius: var(--card-border-radius);
     overflow: hidden;
@@ -354,7 +394,21 @@ main .container .left .profile{
     font-size: 1.4rem;
     margin: 0.6rem;
 }
+.interaction-buttons{
+    display: flex;
+}
 
+.interaction-buttons .like,.dislike,.comm{
+    margin-right: 0.8rem;
+
+}
+.interaction-buttons .like .xyz{
+    background-color: transparent;
+}
+
+.interaction-buttons .dislike .xyz{
+    background-color: transparent;
+}
 main .container .right{
     height: max-content;
     position: sticky;
