@@ -25,17 +25,17 @@
     </div>
     <div class="action-buttons">
       <div class="interaction-buttons">
-        <form method="POST" action="{% url 'like' post.pk %}">
+        <form class="like" method="POST" action="{% url 'like' post.pk %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
-          <button type="submit">
+          <button class="xyz" type="submit">
             <i class="uil uil-thumbs-up">{{ post.likes.all.count }}</i>
           </button>
         </form>
-        <form method="POST" action="{% url 'dislike' post.pk %}">
+        <form class="dislike" method="POST" action="{% url 'dislike' post.pk %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.path }}" />
-          <button type="submit">
+          <button class="xyz" type="submit">
             <i class="uil uil-thumbs-down">{{ post.dislikes.all.count }}</i>
           </button>
         </form>
@@ -76,17 +76,17 @@
       </div>
       <div class="action-buttons">
         <div class="interaction-buttons">
-          <form method="POST" action="{% url 'comment-like' post.pk comment.pk %}">
+          <form class="like" method="POST" action="{% url 'comment-like' post.pk comment.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}" />
-            <button type="submit">
+            <button class="xyz" type="submit">
               <i class="uil uil-thumbs-up">{{ comment.likes.all.count }}</i>
             </button>
           </form>
-          <form method="POST" action="{% url 'comment-dislike' post.pk comment.pk %}">
+          <form class="dislike" method="POST" action="{% url 'comment-dislike' post.pk comment.pk %}">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}" />
-            <button type="submit">
+            <button class="xyz" type="submit">
               <i class="uil uil-thumbs-down">{{ post.dislikes.all.count }}</i>
             </button>
           </form>

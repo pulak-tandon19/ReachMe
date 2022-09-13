@@ -32,7 +32,7 @@
       <div class="container">
   <!-- ...........left............ -->
   <div class="left">
-    <a href="" class="profile">
+    <a href="{% url 'profile' request.user.pk %}" class="profile">
         <div class="profile-photo">
             <img src="{{ request.user.profile.picture.url }}" alt="">
         </div>
@@ -96,7 +96,7 @@
           </div>
           <div class="message-body">
             <!-- <h5>Edem Quist</h5> -->
-          
+          {% inbox %}
           </div>
         </div>
       </div>

@@ -373,6 +373,17 @@ main .container .left .profile{
     cursor: pointer;
     color:white;
 }
+
+.buttonsd{
+    width:100%;
+    border-radius: 50px;
+    background-color: var(--color-danger);
+    height: 50px;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    color:white;
+}
 .fullwidth{
     width: 100%;
     max-width: 100%;

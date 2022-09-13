@@ -1,22 +1,12 @@
 {% extends 'landing/base.html' %} {% block content %}
-<div class="feeds">
-  <div class="feed">
-    <div class="head">
-      <div class="user">
-        <div class="ingo">
-          <h3>Delete Post?</h3>
-          <p>Once deleted, the action cannot be undone!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
   <div class="feeds">
     <div class="feed">
       <div class="caption">
         <form method="POST">
           {% csrf_token %}
-          <button>Delete</button>
+          <h3>Delete Post?</h3>
+          <p>Once deleted, the action cannot be undone!</p>
+          <button class="buttonsd">Delete</button>
         </form>
       </div>
     </div>
