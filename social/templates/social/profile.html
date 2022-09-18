@@ -67,10 +67,10 @@
             <small class="text-muted">{{ post.created_on }}</small>
           </div>
           <span class="spacing">
-            <a href="">
+            <a href="{% url 'post-edit' post.pk %}">
                 <i class="far fa-edit"></i>
             </a>
-            <a href="">
+            <a href="{% url 'post-delete' post.pk %}">
             <i class="fas fa-trash"></i>
         </a>
           </span>
@@ -104,7 +104,6 @@
           <a href="{% url 'post-detail' post.pk %}">
             <span><i class="uil uil-comment-dots"></i></span>
           </a>
-          <span><i class="uil uil-share-alt"></i></span>
         </div>
       </div>
     </div>

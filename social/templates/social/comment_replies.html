@@ -15,6 +15,16 @@
         <small class="text-muted">{{ parent_comment.created_on }}</small>
 
           </div>
+          {% if parent_comment.author == request.user %}
+          <span class="spacing">
+            <a href="{% url 'comment-edit' post.pk parent_comment.pk parent_comment.comment_level %}">
+                <i class="far fa-edit"></i>
+            </a>
+            <a href="{% url 'comment-delete' post.pk parent_comment.pk %}">
+            <i class="fas fa-trash"></i>
+        </a>
+          </span>
+          {% endif %}
       </div>
     </div>
     <div class="caption">
@@ -67,6 +77,16 @@
           <h3>{{ comment.author.username }}</h3>
           <small class="text-muted">{{ comment.created_on }}</small>
         </div>
+        {% if comment.author == request.user %}
+        <span class="spacing">
+          <a href="{% url 'comment-edit' post.pk comment.pk comment.comment_level %}">
+              <i class="far fa-edit"></i>
+          </a>
+          <a href="{% url 'comment-delete' post.pk comment.pk %}">
+          <i class="fas fa-trash"></i>
+      </a>
+        </span>
+        {% endif %}
       </div>
     </div>
     <div class="caption">

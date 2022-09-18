@@ -367,8 +367,8 @@ main .container .left .profile{
     width:100%;
     border-radius: 50px;
     background-color: var(--color-primary);
-    height: 50px;
-    font-size: 30px;
+    font-size: 1.3rem;
+    height: 3rem;
     padding: 10px;
     cursor: pointer;
     color:white;
@@ -378,11 +378,12 @@ main .container .left .profile{
     width:100%;
     border-radius: 50px;
     background-color: var(--color-danger);
-    height: 50px;
-    font-size: 30px;
+    height: 3rem;
+    font-size: 1.3rem;
     padding: 10px;
     cursor: pointer;
     color:white;
+    margin-top: 1rem;
 }
 .fullwidth{
     width: 100%;
@@ -667,6 +668,94 @@ main .container .right{
     background: var(--color-danger);
 }
 
+.feeds .feed .formUpdate .form{
+    display: flex;
+    flex-direction: column;
+}
+.feeds .feed .formUpdate .form input[type="text"], textarea {
+background-color : var(--color-light);
+}
+
+.feeds .feed .formUpdate .form #name{
+    height: 2rem;
+    margin: 1rem;
+    border-radius: 5px;
+}
+.feeds .feed .formUpdate .form #name:focus{
+    font-size: 1.2rem;
+    padding: 10px;
+}
+.feeds .feed .formUpdate .form #bio{
+    height: 9rem;
+    margin: 1rem;
+     border-radius: 5px;
+}
+.feeds .feed .formUpdate .form #bio:focus{
+    font-size: 1.2rem;
+    padding: 10px;
+}
+.feeds .feed .formUpdate .form #date{
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+.feeds .feed .formUpdate .form #location{
+    margin:1rem;
+    height: 2rem;
+    border-radius: 5px;
+}
+.feeds .feed .formUpdate .form #location:focus{
+    font-size: 1.2rem;
+    padding: 10px;
+}
+.feeds .feed .formUpdate .form #pp{
+    margin: 1rem;
+    padding: 10px;
+}
+
+.homePage{
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--color-light);
+    /* background-color: red; */
+}
+.homePage .welcome{
+    margin-top: 14rem;
+    margin-left: 31rem;
+    font-size: 4rem;
+    background-color: var(--color-white);
+    padding: 10px;
+    border-radius: 10px;
+    width: 47%;
+}
+.homePage .tag{
+    font-size: 20px;
+    margin-left: 15rem;
+    margin-top: 20px;
+}
+.homePage .btnLogin{
+    font-size: 20px;
+    margin-left: 3rem;
+    cursor: pointer;
+    margin-top: 7rem;
+    background-color:var(--color-light);
+    padding: 8px;
+    border-radius: 5px;
+}
+.homePage .btnLogin:hover{
+    background-color:var(--color-primary);
+}
+.homePage .btnRegister{
+    font-size: 20px;
+    margin-left: 50rem;
+    cursor: pointer;
+    margin-top: 7rem;
+    background-color: var(--color-light);
+    padding: 8px;
+    border-radius: 5px;
+}
+.homePage .btnRegister:hover{
+    background-color:var(--color-primary);
+}
 /* ====================================
 MEDIA QUERIES FOR SMALL LAPTOPS AND BIG TABLETS
 ======================================

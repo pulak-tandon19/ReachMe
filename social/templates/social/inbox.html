@@ -9,9 +9,7 @@
             <img src="{{ thread.receiver.profile.picture.url }}" alt="">
         </div>
         <div class="message-body">
-            
-
-            <h5>    
+             <h5>    
                 {% if thread.receiver != request.user %}
                 {{ thread.receiver }}
                 {% else %}
@@ -19,8 +17,7 @@
                 {% endif %}
             </h5>
 </a>
-
-        </div>
+</div>
     </div>
     {% endfor %}
 </div>
