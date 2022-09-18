@@ -71,10 +71,11 @@
     </form>
       <div class="create">
           <label class= "btn btn-primary" for="create-post">Create</label>
+          <a href="{% url 'profile' request.user.profile.pk %}">
               <div class="profile-photo">
                   <img src="{{ user.profile.picture.url }}" alt="">
               </div>
-          
+          </a>
       </div>
   </div>
 </nav>
