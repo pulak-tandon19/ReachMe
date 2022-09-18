@@ -19,7 +19,7 @@ class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         logged_in_user=request.user
         posts=Post.objects.filter(
-            author__profile__followers__in=[logged_in_user.id]
+            author__profile__followers__in=[logged_in_user.id] 
         )
         form=PostForm()
         share_form= ShareForm()
@@ -242,18 +242,37 @@ class CommentReplyView(LoginRequiredMixin, View):
 
 
 
-class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model=UserProfile
-    fields=['name', 'bio', 'birth_date', 'location', 'picture']
-    template_name='social/profile_edit.html'
+class ProfileEditView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        if profile.user == request.user:
+            context= {
+                'profile' : profile,
+            }
+            return render(request, 'social/profile_edit.html', context)
+        return HttpResponse("Not Allowed!!")
 
-    def get_success_url(self):
-        pk=self.kwargs['pk']
-        return reverse_lazy('profile', kwargs={'pk': pk})
+    def post(self, request, pk, *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        profile.name = self.request.POST.get('name')
+        profile.bio = self.request.POST.get('bio')
+        profile.birth_date = self.request.POST.get('date')
+        profile.location = self.request.POST.get('location')
+        profile.picture = self.request.POST.get('picture')
+        profile.save()
+        return redirect('profile', profile.pk)
+
+    # model=UserProfile
+    # fields=['name', 'bio', 'birth_date', 'location', 'picture']
+    # template_name='social/profile_edit.html'
+
+    # def get_success_url(self):
+    #     pk=self.kwargs['pk']
+    #     return reverse_lazy('profile', kwargs={'pk': pk})
     
-    def test_func(self):
-        profile= self.get_object()
-        return self.request.user==profile.user
+    # def test_func(self):
+    #     profile= self.get_object()
+    #     return self.request.user==profile.user
 
 class AddFollower(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):

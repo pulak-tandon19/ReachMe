@@ -13,6 +13,16 @@
           <h3>{{ post.author.username }}</h3>
           <small class="text-muted">{{ post.created_on }}</small>
         </div>
+        {% if post.author == request.user %}
+        <span class="spacing">
+          <a href="{% url 'post-edit' post.pk %}">
+              <i class="far fa-edit"></i>
+          </a>
+          <a href="{% url 'post-delete' post.pk %}">
+          <i class="fas fa-trash"></i>
+      </a>
+        </span>
+        {% endif %}
       </div>
     </div>
     {% if post.image.count > 0 %} {% for img in post.image.all %}
@@ -69,6 +79,16 @@
             <h3>{{ comment.author.username }}</h3>
             <small class="text-muted">{{ comment.created_on }}</small>
           </div>
+          {% if comment.author == request.user %}
+        <span class="spacing">
+          <a href="{% url 'comment-edit' post.pk comment.pk comment.comment_level %}">
+              <i class="far fa-edit"></i>
+          </a>
+          <a href="{% url 'comment-delete' post.pk comment.pk %}">
+          <i class="fas fa-trash"></i>
+      </a>
+        </span>
+        {% endif %}
         </div>
       </div>
       <div class="caption">
