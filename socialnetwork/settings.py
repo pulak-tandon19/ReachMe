@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-kb-^9+$9!94n_zcybe4&(u$ho_vop!(%b!==bd%(sbb61d&8*5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://reach-me-socialmedia.herokuapp.com/', 'localhost']
 
 AUTHENTICATION_BACKENDS = [
     
