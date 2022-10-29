@@ -36,11 +36,13 @@ class PostListView(LoginRequiredMixin, View):
         posts=Post.objects.filter(
             author__profile__followers__in=[logged_in_user.id]
         )
-        # form=PostForm(request.POST, request.FILES)
         share_form= ShareForm()
-        # files= request.FILES.getlist('image')
+        files= request.FILES.getlist('image')
         body = self.request.POST.get('create-post')
         new_post = Post.objects.create(body= body, author= request.user)
+        for i in files:
+            image = Image.objects.create(image= i)
+            new_post.image.add(image)
         new_post.create_tags()
 
         # if form.is_valid:

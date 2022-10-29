@@ -2,7 +2,7 @@
 custom_tags %} {% block content %}
 
 <!-- .............create post.............  -->
-<form action="" class="create-post" method="POST">
+<form action="" class="create-post" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="profile-photo">
     <img src="{{ request.user.profile.picture.url }}" alt="" />
@@ -15,7 +15,7 @@ custom_tags %} {% block content %}
   />
 
   <div class="attachment">
-      <input type="file" />
+      <input type="file"  name="image" multiple />
   </div>
 
   <button type="submit" class="btn btn-primary button">Post</button>
