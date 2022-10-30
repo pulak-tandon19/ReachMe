@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT socialnetwork.wsgi:application
+web: gunicorn socialnetwork.wsgi --log-file -
