@@ -64,6 +64,7 @@ SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -139,15 +140,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATICFILES_DIRS=[
-    BASE_DIR / 'static'
-]
+# STATICFILES_DIRS=[
+#     BASE_DIR / 'static'
+# ]
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/ 'static'
 MEDIA_ROOT=BASE_DIR / 'media'
 MEDIA_URL='/media/'
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL= 'post-list'
 ACCOUNT_EMAIL_REQUIRED='True'
