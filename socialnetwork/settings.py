@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import cloudinary
 import cloudinary_storage
 
@@ -22,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kb-^9+$9!94n_zcybe4&(u$ho_vop!(%b!==bd%(sbb61d&8*5'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', cast= bool, default = False)
 
-ALLOWED_HOSTS = ['reach-me-socialmedia.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
     
@@ -140,12 +141,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# STATICFILES_DIRS=[
-#     BASE_DIR / 'static'
-# ]
+STATICFILES_DIRS=[
+    BASE_DIR / 'static'
+]
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR/ 'static'
+# STATIC_ROOT = BASE_DIR/ 'static'
 MEDIA_ROOT=BASE_DIR / 'media'
 MEDIA_URL='/media/'
 
@@ -163,9 +164,9 @@ EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dwa20mdk3',
-    'API_KEY': '566192343184749',
-    'API_SECRET': 'E5ag6mWDAkpH-eJP_Y1f_l_JxP8'
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

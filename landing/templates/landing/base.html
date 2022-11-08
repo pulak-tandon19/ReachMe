@@ -47,28 +47,35 @@
     </a>
 <!-- ...........sidebar............ -->
 
+
     <div class="sidebar">
-        <a href="{% url 'post-list' %}" class="menu-item active">
+          <!-- <li onclick="location.href ='{% url 'post-list' %}'" class="menu-item active">
             <span><i class="uil uil-home"></i></span><h3 class= "heading">Home</h3>
-        </a>
-        <a href="{% url 'explore' %}" class="menu-item">
+          </li>
+        <li onclick="location.href ='{% url 'explore' %}';" class="menu-item">
             <span><i class="uil uil-compass"></i></span><h3 class= "heading">Explore</h3>
+        </li> -->
+        <a href ="{% url 'post-list' %}" class="menu-item active">
+          <span><i class="uil uil-home"></i></span><h3 class= "heading">Home</h3>
         </a>
-        <a href="" class="menu-item" id="notifications">
+      <a href ="{% url 'explore' %"} class="menu-item">
+          <span><i class="uil uil-compass"></i></span><h3 class= "heading">Explore</h3>
+      </a>
+        <li href="" class="menu-item" id="notifications">
             <span><i class="uil uil-bell"><small class="notification-count">9</small></i></span><h3 class= "heading">Notifications</h3>
              <!-- ...........notification popup............ -->
              <div class="notifications-popup">
                
              </div> 
-        </a>
-        <a href="" class="menu-item" id="messages-notifications">
+        </li>
+        <li href="" class="menu-item" id="messages-notifications">
         
             <span><i class="uil uil-envelope-alt"><small class="notification-count">9</small></i></span><h3 class= "heading">Messages</h3>
             
-        </a>
-        <a href="" class="menu-item" id="theme">
+        </li>
+        <li href="" class="menu-item" id="theme">
             <span><i class="uil uil-palette"></i></span><h3 class= "heading">Theme</h3>
-        </a>
+        </li>
     </div>
         <!-- ...........end of sidebar............ -->
     <label for="create-post" class ="btn btn-primary">Create Post</label>
