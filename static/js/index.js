@@ -1,32 +1,7 @@
-var getUrl = window.location.href;
+// var getUrl = window.location.href;
 // var getPrefixBySlash = getUrl.split('/');
-console.log(getUrl());
-
-if(getPrefixBySlash[1]==="explore")
-{
-    console.log("Ho gaya");
-    changeActiveItem();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+// console.log(getUrl());
+ 
 
 
 }
