@@ -28,7 +28,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast= bool, default = False)
 
-ALLOWED_HOSTS = [config('ALLOWED_HOST')]
+# ALLOWED_HOSTS = [config('ALLOWED_HOST')]
+ALLOWED_HOSTS = ['*']
 
 AUTHENTICATION_BACKENDS = [
     
@@ -147,8 +148,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR/ 'static'
-MEDIA_ROOT=BASE_DIR / 'media'
 MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR / 'media'
+    
+ 
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
 
